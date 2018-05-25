@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private UpdatingState state = UpdatingState.STOPPED;
 
+    private Button button;
+
     private final static String[] PERMISSIONS = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -58,6 +62,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
 
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startLocationUpdate(true);
+            }
+        });
+
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -67,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000L);
-        locationRequest.setFastestInterval(5000L);
+        //locationRequest.setInterval(10000L);
+        //locationRequest.setFastestInterval(5000L);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         locationCallback = new LocationCallback() {

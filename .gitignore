@@ -12,3 +12,6 @@
 /.idea/runConfigurations.xml
 /.idea/caches
 /.idea/codeStyles
+api_key.txt
+*~
+.*.swp
